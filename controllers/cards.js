@@ -49,7 +49,7 @@ const setCardLike = (req, res) => {
     { new: true },
   ).orFail(new Error('NotFound'))
     .populate(['owner', 'likes'])
-    .then((card) => res.status(201).send(card))
+    .then((card) => res.status(200).send(card))
     .catch((err) => handleError(res, err));
 };
 
@@ -60,7 +60,7 @@ const removeCardLike = (req, res) => {
     { new: true },
   ).orFail(new Error('NotFound'))
     .populate(['owner', 'likes'])
-    .then((card) => res.status(201).send(card))
+    .then((card) => res.status(200).send(card))
     .catch((err) => handleError(res, err));
 };
 
