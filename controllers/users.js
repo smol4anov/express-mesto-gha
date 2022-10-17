@@ -10,7 +10,7 @@ const handleError = (res, err) => {
     res.status(ERROR_WRONG_DATA).send({ message: 'Переданы некорректные данные', err });
     return;
   }
-  if (err.name === 'NotFound') {
+  if (err.message === 'NotFound') {
     res.status(ERROR_NOT_FOUND).send({ message: 'Запрашиваемый пользователь не найден' });
     return;
   }
@@ -29,13 +29,13 @@ const creatUser = (req, res) => {
 
 const getUsers = (req, res) => {
   User.find({})
-    .then((users) => res.status(201).send(users))
+    .then((users) => res.status(200).send(users))
     .catch((err) => handleError(res, err));
 };
 
 const getUserById = (req, res) => {
   User.findById(req.params.userId).orFail(new Error('NotFound'))
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => handleError(res, err));
 };
 
@@ -49,7 +49,7 @@ const updateUserById = (req, res) => {
       runValidators: true,
     },
   ).orFail(new Error('NotFound'))
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => handleError(res, err));
 };
 
@@ -63,7 +63,7 @@ const updateUserAvatar = (req, res) => {
       runValidators: true,
     },
   ).orFail(new Error('NotFound'))
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => handleError(res, err));
 };
 

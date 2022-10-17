@@ -24,7 +24,7 @@ const handleError = (res, err) => {
 const creatCard = (req, res) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .populate('owner')
+    .then((card) => card.populate('owner'))
     .then((card) => res.status(201).send(card))
     .catch((err) => handleError(res, err));
 };
