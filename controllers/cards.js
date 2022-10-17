@@ -10,7 +10,7 @@ const handleError = (res, err) => {
     res.status(ERROR_WRONG_DATA).send({ message: 'Переданы некорректные данные', err });
     return;
   }
-  if (err.name === 'NotFound') {
+  if (err.message === 'NotFound') {
     res.status(ERROR_NOT_FOUND).send({ message: 'Запрашиваемая карточка не найдена' });
     return;
   }
