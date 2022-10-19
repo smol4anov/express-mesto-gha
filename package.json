@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/smol4anov/express-mesto-gha.git"
   },
-  "author": "",
+  "author": "Molchanov Sergey",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/smol4anov/express-mesto-gha/issues"
