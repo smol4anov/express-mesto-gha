@@ -3,6 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const {
   getUsers, getUserById, updateUserById, updateUserAvatar, getSelfUser,
 } = require('../controllers/users');
+const { rexExpUrl } = require('../utils/constants');
 
 usersRouter.get('/', getUsers);
 
@@ -23,7 +24,7 @@ usersRouter.patch('/me', celebrate({
 
 usersRouter.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required(),
+    avatar: Joi.string().required().pattern(rexExpUrl),
   }),
 }), updateUserAvatar);
 

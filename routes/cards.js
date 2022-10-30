@@ -3,13 +3,14 @@ const { celebrate, Joi } = require('celebrate');
 const {
   creatCard, getCards, deleteCardById, setCardLike, removeCardLike,
 } = require('../controllers/cards');
+const { rexExpUrl } = require('../utils/constants');
 
 cardsRouter.get('/', getCards);
 
 cardsRouter.post('/', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required(),
+    link: Joi.string().required().pattern(rexExpUrl),
   }),
 }), creatCard);
 

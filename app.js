@@ -8,6 +8,7 @@ const cardsRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { NotFoundError } = require('./errors');
+const { rexExpUrl } = require('./utils/constants');
 
 const { PORT = 3000 } = process.env;
 
@@ -31,7 +32,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required().min(8),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string(),
+    avatar: Joi.string().pattern(rexExpUrl),
   }),
 }), createUser);
 

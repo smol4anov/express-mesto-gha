@@ -11,7 +11,7 @@ const createUser = (req, res, next) => {
       ...req.body,
       password: hash,
     }))
-    .then(() => res.status(201).send({ message: 'successful registration' }))
+    .then((user) => res.status(201).send(user))
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError('Пользователь уже зарегистрирован'));
