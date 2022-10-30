@@ -11,6 +11,7 @@ const createUser = (req, res, next) => {
       ...req.body,
       password: hash,
     }))
+    .then((user) => User.findById(user._id))
     .then((user) => res.status(201).send(user))
     .catch((err) => {
       if (err.code === 11000) {
