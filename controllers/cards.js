@@ -34,7 +34,7 @@ const deleteCardById = (req, res, next) => {
     .then(() => res.status(200).send({ status: 'deleted' }))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
         return;
       }
       next(err);
@@ -51,7 +51,7 @@ const setCardLike = (req, res, next) => {
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
         return;
       }
       next(err);
@@ -68,7 +68,7 @@ const removeCardLike = (req, res, next) => {
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
         return;
       }
       next(err);

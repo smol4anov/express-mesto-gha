@@ -11,8 +11,11 @@ const createUser = (req, res, next) => {
       ...req.body,
       password: hash,
     }))
-    .then((user) => User.findById(user._id))
-    .then((user) => res.status(201).send(user))
+    .then((user) => {
+      const newUser = user.toObject();
+      delete newUser.password;
+      res.status(201).send(newUser);
+    })
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError('Пользователь уже зарегистрирован'));
@@ -37,7 +40,7 @@ const getUserById = (req, res, next) => {
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
         return;
       }
       next(err);
@@ -49,7 +52,7 @@ const getSelfUser = (req, res, next) => {
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
         return;
       }
       next(err);
@@ -69,7 +72,11 @@ const updateUserById = (req, res, next) => {
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
+        return;
+      }
+      if (err instanceof mongoose.Error.ValidationError) {
+        next(new ValidationError('Переданы некорректные данные'));
         return;
       }
       next(err);
@@ -89,7 +96,7 @@ const updateUserAvatar = (req, res, next) => {
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(new NotFoundError('Некорректный формат id'));
+        next(new ValidationError('Некорректный формат id'));
         return;
       }
       if (err instanceof mongoose.Error.ValidationError) {
